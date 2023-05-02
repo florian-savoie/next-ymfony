@@ -1,0 +1,5 @@
+# démarrer le server
+symfony serve:start
+
+# stop le server
+symfony serve:end
