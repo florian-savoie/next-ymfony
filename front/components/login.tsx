@@ -11,10 +11,13 @@ import {
     Heading,
     Text,
     useColorModeValue,
+    useToast,
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import axios from 'axios';
   import qs from 'qs';
+  import {  useRouter } from 'next/router';
+
   export default function Login() {
     const [isLoading, setIsLoading] = useState(false);
 
@@ -22,6 +25,9 @@ import {
       email: '',
       password: '',
   })
+  const toast = useToast();
+    const router = useRouter() ;
+    
   const onChange = (e: any) => {
     // varible name and value
     let name = e.target.name
@@ -31,13 +37,58 @@ import {
 }
 
 const Login = async() => {
+
+  try {
   setIsLoading(true)
   // je traite mes donnees
   let data = qs.stringify({
       'email': login.email,
       'password': login.password
   });
-console.log(login.email);
+  // axios et la route que je veux consommer
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'http://localhost:8000/login',
+    headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data : data
+};
+
+// execute la route
+const response = await axios.request(config)
+
+// je récupère les données de mon api
+
+// verif
+
+// requete http -> symfony 
+
+toast({
+    title: 'Vous etes bien connecter .',
+    description: ".",
+    status: 'success',
+    duration: 3000,
+    isClosable: true,
+})
+
+setIsLoading(false)
+document.cookie = "token="+response.data.data.jwt+";path=/;"
+router.push('/dashboard');
+} catch (err:any) {
+
+setIsLoading(false)
+
+console.log(err.response.data);
+toast({
+  title: err.response.data.data.titleError,
+  description: err.response.data.data.error,
+  status: 'error',
+  duration: 3000,
+  isClosable: true,
+});
+}
 }
 
     return (

@@ -17,6 +17,11 @@ user_register:
     path: /register
     # the controller value has the format 'controller_class::method_name'
     controller: App\Controller\RegisterController::Response
+
+user_auth:
+    path: /auth
+    # the controller value has the format 'controller_class::method_name'
+    controller: App\Controller\AuthController::Response
     
 
 kernel:

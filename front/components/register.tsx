@@ -32,7 +32,7 @@ import {
         confirmPassword: ''
     })
     const toast = useToast();
-const router = useRouter() ;
+    const router = useRouter() ;
 
     const onChange = (e: any) => {
         // varible name and value
@@ -84,7 +84,9 @@ const router = useRouter() ;
                 isClosable: true,
             })
             
-            setIsLoading(false)
+            setIsLoading(false);
+            document.cookie = "token="+response.data.data.jwt+";path=/;"
+
             router.push('/dashboard');
           } catch (err:any) {
             

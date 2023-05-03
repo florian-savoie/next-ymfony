@@ -33,7 +33,7 @@ const NavLink = ({ children }: { children: ReactNode }) => (
   </Link>
 );
 
-export default function Navbar() {
+export default function Navbar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -50,7 +50,7 @@ export default function Navbar() {
     <ChakraLink as={Link} href="/dashboard">
           Dashboard
         </ChakraLink>
-    <Flex alignItems={'center'}>
+   {props.token ? <Flex alignItems={'center'}>
       <Stack direction={'row'} spacing={7}>
         <Button onClick={toggleColorMode}>
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
@@ -92,7 +92,33 @@ export default function Navbar() {
 
 
       </Stack>
-    </Flex>
+    </Flex> :  <Stack
+          flex={{ base: 1, md: 0 }}
+          justify={'flex-end'}
+          direction={'row'}
+          spacing={6}>
+          <Button
+            as={'a'}
+            fontSize={'sm'}
+            fontWeight={400}
+            variant={'link'}
+            href={'#'}>
+            Sign In
+          </Button>
+          <Button
+            as={'a'}
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'pink.400'}
+            href={'#'}
+            _hover={{
+              bg: 'pink.300',
+            }}>
+            Sign Up
+          </Button>
+        </Stack> }
   </Flex>
 </Box>
     </>

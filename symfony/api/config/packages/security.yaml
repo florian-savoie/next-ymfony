@@ -39,6 +39,10 @@ when@test:
                 memory_cost: 10 # Lowest possible value for argon
  
  # config/packages/security.yaml
+
+
+
+ 
 security:
     enable_authenticator_manager: true
     # ...

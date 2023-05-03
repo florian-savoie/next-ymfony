@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
@@ -45,23 +46,29 @@ class RegisterController extends AbstractController
         if ($error['error'] == true) {
             $response->setContent(json_encode([
                 'data' => [
-                    'titleError' => 'Erreur lors de l\'inscription',
-                    'error' => $error['message'],
+                    'titleError' => 'Une erreur est survenue',
+                    'error' => $error['message']
                 ],
             ]));
             $response->setStatusCode(409);
-        } else {
-            $response->setContent(json_encode([
-                'data' => [
-                    'firstname' => $firstname,
-                    'lastname' => $lastname,
-                    'email' => $email,
-                    'password' => $password,
-                    'confirmPassword' => $confirmPassword,
-                ],
-            ]));
-            $response->setStatusCode(200);
+    
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
         }
+
+
+        $response->setContent(json_encode([
+            'data' => [
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'email' => $email,
+                'password' => $password,
+                'confirmPassword' => $confirmPassword,
+                'jwt' => $error['jwt']
+            ],
+        ]));
+        $response->setStatusCode(200);
+
 
         $response->headers->set('Content-Type', 'application/json');
         return $response;
