@@ -85,7 +85,9 @@ export default function Navbar(props: any) {
             
             <MenuDivider />
             <MenuItem as={Link} href="/dashboard">Mon compte</MenuItem>
-            <MenuItem as={Link} href="/logout">Deconnexion</MenuItem>
+            <MenuItem onClick={() =>{
+              
+            } }>Deconnexion</MenuItem>
           </MenuList>
         </Menu>
 

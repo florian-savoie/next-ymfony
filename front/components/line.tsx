@@ -1,19 +1,16 @@
-import React from 'react';
-import { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement, 
+  LineElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import {
-     Box, 
-    } from "@chakra-ui/react"
 import { Line } from 'react-chartjs-2';
+import { Card,useColorModeValue } from '@chakra-ui/react';
 
 ChartJS.register(
   CategoryScale,
@@ -25,7 +22,7 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+export const options:any = {
   responsive: true,
   plugins: {
     legend: {
@@ -33,52 +30,34 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Line Chart',
+      text: 'Détail paiement',
     },
   },
 };
 
-const labels = ['janvier', 'fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+export function LineComposant(props:any) {
 
+  const [labels, setLabels] = useState([]);
 
+  const data = {
+    labels: labels.map((v:any) => v.release_date),
+    datasets: [
+      {
+        label: 'Vote',
+        data: labels.map((v:any) => v.vote_average),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ],
+  };
 
-export function LineChart(props:any) {
+  useEffect(() => {
+    if (props.data?.results) {
+      setLabels(props.data.results);
+    }
+  }, [props.data?.results]);
 
-    const [note , setNote] : any = useState([])
-    const [vote , setvote] : any = useState([])
-    const [date ,setdate] : any = useState([])
-
-    useEffect(() => {
-    console.log(props.data.results)
-     if(props.data?.results){
-
-     }
-    props.data.results.map((v:any) => {
-        labels.push(v.release_date);
-        vote.push(v.release_date);
-        note.push(v.release_date);
-    })
-    }, [props])
-
-
-    const data = {
-        labels: labels,
-        datasets: [
-          {
-            label: ' note ',
-            data: note,
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          },
-          {
-            label: 'vote ',
-            data: vote,
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
-        ],
-      };
-  return <Box>
+  return  <Card  m={20} p={10} bg={useColorModeValue('gray.200', 'gray.700')} width={"1050px"} h={'70%'}>
   <Line options={options} data={data} />
-  </Box>;
+</Card>  ;
 }
