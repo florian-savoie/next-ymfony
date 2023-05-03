@@ -84,9 +84,8 @@ export default function Navbar(props: any) {
             <br />
             
             <MenuDivider />
-            <MenuItem>Your Servers</MenuItem>
-            <MenuItem>Account Settings</MenuItem>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem as={Link} href="/dashboard">Mon compte</MenuItem>
+            <MenuItem as={Link} href="/logout">Deconnexion</MenuItem>
           </MenuList>
         </Menu>
 
@@ -98,25 +97,25 @@ export default function Navbar(props: any) {
           direction={'row'}
           spacing={6}>
           <Button
-            as={'a'}
+            as={Link}
             fontSize={'sm'}
             fontWeight={400}
             variant={'link'}
-            href={'#'}>
-            Sign In
+            href={'/login'}>
+            connexion
           </Button>
           <Button
-            as={'a'}
+            as={Link}
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
             color={'white'}
-            bg={'pink.400'}
-            href={'#'}
+            bg={'green.400'}
+            href={'/register'}
             _hover={{
               bg: 'pink.300',
             }}>
-            Sign Up
+            Insciption
           </Button>
         </Stack> }
   </Flex>
